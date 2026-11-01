@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -32,8 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kotlin.ui.theme.KotlinTheme
 import kotlin.random.Random
-//import androidx.compose.material.icons.Icons
-//import androidx.compose.material.icons.filled.Star
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,51 +41,49 @@ class MainActivity : ComponentActivity() {
         setContent {
             KotlinTheme {
                 // Задание 1
-                Hello("Александр")
+                //Hello("Александр")
                 //Hello(null)
 
                 //Задание 2
                 //HelloPreviewRound()
+                //HelloPreviewLandscape()
+                //HelloPreviewPortrait()
 
                 // Задание 3
                 //StyledText()
 
                 // Задание 4
-                // CustomButton()
+                //CustomButton()
 
                 // Задание 5
                 //InitialsContainer()
 
                 // Задание 6
-                // CircleTopRight()
-                // CircleStretchedPurple()
+                //CircleTopRight()
+                CircleStretchedPurple()
 
                 // Задание 7
-                // ContactColumnPreview()
-                // ContactRowPreview()
+                //ContactColumnPreview()
+                //ContactRowPreview()
 
                 // Задание 8
-                // WaterTracker()
+                //WaterTracker()
 
                 // Задание 10
-                ShoppingCartScreen()
+                //ShoppingCartScreen()
             }
         }
     }
 }
 
-// ==========================================
-// ЗАДАНИЕ 1: Функция Hello
-// ==========================================
+// Задание 1
 @Composable
 fun Hello(name: String?) {
     val displayName = if (name == null) "Имя не задано" else "Привет, $name!"
     Text(text = displayName)
 }
 
-// ==========================================
-// ЗАДАНИЕ 2: Превью для Hello
-// ==========================================
+// Задание 2
 @Preview(name = "portrait", showSystemUi = true, device = "spec:width=411dp,height=891dp")
 @Composable
 fun HelloPreviewPortrait() { KotlinTheme { Hello("Портрет") } }
@@ -103,14 +100,12 @@ fun HelloPreviewRound() {
     }
 }
 
-// ==========================================
-// ЗАДАНИЕ 3: Стилизованный текст
-// ==========================================
+// Задание 3
 @Composable
 fun StyledText() {
     Column {
         Text(
-            text = stringResource(id = R.string.long_text), // ВАЖНО: нужно добавить строку в strings.xml (см. Шаг 3)
+            text = stringResource(id = R.string.long_text),
             modifier = Modifier.padding(top = 48.dp).background(Color.Green),
             color = Color.Black,
             fontSize = 24.sp,
@@ -128,9 +123,7 @@ fun StyledText() {
     }
 }
 
-// ==========================================
-// ЗАДАНИЕ 4: Кастомная кнопка
-// ==========================================
+// Задание 4
 @Composable
 fun CustomButton() {
     Button(
@@ -145,9 +138,7 @@ fun CustomButton() {
     }
 }
 
-// ==========================================
-// ЗАДАНИЕ 5: Контейнер с инициалами
-// ==========================================
+// Задание 5
 @Composable
 fun InitialsContainer() {
     Row(
@@ -164,9 +155,7 @@ fun InitialsContainer() {
     }
 }
 
-// ==========================================
-// ЗАДАНИЕ 6
-// ==========================================
+// Задание 6
 @Composable
 fun CircleTopRight() {
     Box(modifier = Modifier.size(width = 240.dp, height = 120.dp).background(Color.Black)) {
@@ -181,20 +170,24 @@ fun CircleTopRight() {
 @Composable
 fun CircleStretchedPurple() {
     Box(
-        modifier = Modifier.size(width = 240.dp, height = 120.dp).background(Color.Blue),
+        modifier = Modifier
+            .size(width = 240.dp, height = 120.dp)
+            .background(Color.Blue),
         contentAlignment = Alignment.Center
     ) {
         Image(
             painter = painterResource(id = R.drawable.circle),
             contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            colorFilter = ColorFilter.tint(Color.Magenta)
+            modifier = Modifier
+                .width(240.dp)
+                .height(120.dp),
+            contentScale = ContentScale.FillBounds,
+            colorFilter = ColorFilter.tint(Color(0xFF800080))
         )
     }
 }
-// ==========================================
-// ЗАДАНИЕ 7
-// ==========================================
+
+// Задание 7
 @Composable
 fun ContactCard(name: String, phone: String, address: String, isRow: Boolean = false, showStar: Boolean = false) {
     val content = @Composable {
@@ -236,9 +229,8 @@ fun ContactColumnPreview() {
 fun ContactRowPreview() {
     ContactCard("Евгений", "+7 495...", "Москва...", isRow = true, showStar = true)
 }
-// ==========================================
-// ЗАДАНИЕ 8
-// ==========================================
+
+// Задание 8
 @Composable
 fun WaterTracker() {
     var waterCount by remember { mutableIntStateOf(0) }
@@ -268,9 +260,7 @@ fun WaterTracker() {
     }
 }
 
-// ==========================================
-// ЗАДАНИЕ 10
-// ==========================================
+// Задание 10
 data class Product(val id: Int, val name: String, val price: Int)
 
 @Composable
